@@ -23,6 +23,7 @@ def process(data):
 
     meta_data = {
         'format': body['format'],
+        'title': data["title"],
         'changed': changed.strftime("%Y-%m-%d %H:%M:%S"),
         'created': created.strftime("%Y-%m-%d %H:%M:%S"),
         'nid': node_id,
@@ -46,12 +47,12 @@ def process(data):
     txt_filename = f'{path}/{node_id}.txt'
     html_filename = f'{path}/{node_id}.html'
     meta_filename = f'{path}/meta.json'
-    with open(txt_filename, "w") as txt:
+    with open(txt_filename, "w", encoding='utf8') as txt:
         txt.write(body['value'])
-    with open(html_filename, "w") as html:
+    with open(html_filename, "w", encoding='utf8') as html:
         html.write(body['safe_value'])
-    with open(meta_filename, "w") as meta:
-        json.dump(meta_data, meta)
+    with open(meta_filename, "w", encoding='utf8') as meta:
+        json.dump(meta_data, meta, ensure_ascii=False)
     if 'upload' in data and len(data['upload']) > 0:
         uploads = data['upload']['und']
         for upload in uploads:
